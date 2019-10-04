@@ -20,10 +20,13 @@ connection.once('open', function() {
 });
 
 garmentRoutes.route('/').get(function(req, res) {
-    Garment.find()
-        .limit(resPerPage)
-        .then(function(garments) {
-            res.json(garments);
+    res.redirect('/1');
+});
+
+garmentRoutes.route('/:page').get(function(req, res) {
+    Garment.paginate({}, {page: req.params.page, limit: resPerPage})
+        .then(function(result) {
+            res.json(result);
         })
         .catch(function(err) {
             console.log(err);

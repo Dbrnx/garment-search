@@ -1,46 +1,49 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import {Card, CardColumns} from "react-bootstrap";
-
-const GarmentThumbnail = props => (
-    <Card>
-        <Card.Img src={props.garment.product_imgs_src} />
-        <Card.Body>
-            <Card.Title class="text-uppercase text-truncate">
-                <strong>{props.garment.product_title}</strong>
-            </Card.Title>
-            <Card.Text class="text-truncate">
-                {props.garment.brand}
-            </Card.Text>
-        </Card.Body>
-        <Card.Footer>
-            <strong>£{props.garment.price}</strong>
-        </Card.Footer>
-    </Card>
-);
+import {CardColumns} from "react-bootstrap";
+import GarmentThumbnail from "../garment-thumbnail/garment-thumbnail";
+import PageNumbers from "../page-numbers/page-numbers";
 
 
 export default class SearchResult extends Component {
-    render() {
-        return (
-            <CardColumns>
-                { this.garmentGrid() }
-            </CardColumns>
-        )
-    }
-
     constructor(props) {
         super(props);
 
-        this.state = {garments: []};
+        this.state = {
+            results: [],
+            numPages: 0,
+            numResults: 0
+        };
+    }
+
+    render() {
+        return (
+            <div>
+                <p><strong>{this.state.numResults}</strong> results for : <strong>QUERY GOES HERE</strong></p>
+                <PageNumbers
+                    currentPage={Number(this.props.match.params.page) || 1}
+                    numPages={this.state.numPages}
+                />
+                <CardColumns>
+                    {this.garmentGrid()}
+                </CardColumns>
+                <PageNumbers
+                    currentPage={Number(this.props.match.params.page) || 1}
+                    numPages={this.state.numPages}
+                />
+            </div>
+        )
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/garments/')
+        axios.get('http://localhost:4000/garments/' + this.props.match.params.page)
             .then(response => {
-                this.setState({ garments: response.data });
+                this.setState({
+                    results: response.data.docs,
+                    numPages: response.data.pages,
+                    numResults: response.data.total
+                });
             })
             .catch(function (error){
                 console.log(error);
@@ -48,8 +51,11 @@ export default class SearchResult extends Component {
     }
 
     garmentGrid() {
-        return this.state.garments.map(function(currentGarment, i){
-            return <GarmentThumbnail garment={currentGarment} key={i}/>;
+        return this.state.results.map(function(currentGarment, i){
+            return <GarmentThumbnail
+                garment={currentGarment}
+                key={i}
+            />;
         })
     }
 }
