@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import SearchResult from "./components/search-result.component";
+import SearchResult from "../search-result/search-result";
 
 class App extends Component {
     render() {
