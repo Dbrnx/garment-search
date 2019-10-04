@@ -2,18 +2,32 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import {Card, CardColumns} from "react-bootstrap";
+
 const GarmentThumbnail = props => (
-    <p>{props.garment.product_title}</p>
+    <Card>
+        <Card.Img src={props.garment.product_imgs_src} />
+        <Card.Body>
+            <Card.Title class="text-uppercase text-truncate">
+                <strong>{props.garment.product_title}</strong>
+            </Card.Title>
+            <Card.Text class="text-truncate">
+                {props.garment.brand}
+            </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+            <strong>£{props.garment.price}</strong>
+        </Card.Footer>
+    </Card>
 );
 
 
 export default class SearchResult extends Component {
     render() {
         return (
-            <div>
-                <p>Search result here</p>
+            <CardColumns>
                 { this.garmentGrid() }
-            </div>
+            </CardColumns>
         )
     }
 

@@ -7,7 +7,7 @@ const garmentRoutes = express.Router();
 const PORT = 4000;
 const resPerPage = 9;
 
-let Garment = require('./models/garment.model');
+let Garment = require('./models/garment');
 
 app.use(cors());
 app.use(bodyParser.json());
