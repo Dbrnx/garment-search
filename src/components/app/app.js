@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -12,12 +12,14 @@ class App extends Component {
             <Router>
                 <Container>
                     <Navbar bg="light" expand="lg">
-                        <Navbar.Brand>
-                            Garment Search<br/>
-                            <small className="text-muted">
-                            a coding exercise for Intelistyle, by Guillaume Debournoux
-                            </small>
-                        </Navbar.Brand>
+                        <Link to="/">
+                            <Navbar.Brand>
+                                Garment Search<br/>
+                                <small className="text-muted">
+                                a coding exercise for Intelistyle, by Guillaume Debournoux
+                                </small>
+                            </Navbar.Brand>
+                        </Link>
                         <Navbar.Toggle/>
                         <Navbar.Collapse className="justify-content-end">
                             <Form inline>
